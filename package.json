@@ -1,5 +1,5 @@
 {
-    "version": "0.1.0-a",
+    "version": "0.1.1-a",
     "name": "sender",
     "scripts": {
         "increase": "node node_modules/vpplus/vpplus.js increase-build"
@@ -15,6 +15,7 @@
     "dependencies": {
         "vpplus": "git://github.com/sanyabeast/vpplus.git",
         "requirejs": "latest",
-        "requirejs-text": "latest"
-    },
+        "requirejs-text": "latest",
+        "superagent": "latest"
+    }
 }
