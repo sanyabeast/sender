@@ -97,6 +97,11 @@ define([
                 this._presets[k].name = k;
             }
         },
+        getURL : function(tpl, settings){
+            tpl = Template.fast(tpl, this.vars);
+            if (settings) tpl = Template.fast(tpl, settings);
+            return tpl;
+        },
         _onresponse : function(xhr, options, data, error, response){
             if (this.onResponse){
                 this.onResponse(new this.Response(error, response || null, xhr, options, data));
@@ -121,9 +126,7 @@ define([
         },
         send : function(options, data){
             var method = options.method || "get";
-            var url    = Template.fast(options.url, this._vars);
-
-            if (data && data.vars) url = Template.fast(url, data.vars);
+            var url    = this.getURL(options.url, data.vars);
 
 
             var mime   = options.mime || "form";
@@ -150,7 +153,7 @@ define([
         Response : function(error, response, xhr, options, data){
             this.error = error;
             this.response = response;
-            this.body = response.body;
+            this.body = response ? response.body : null;
             this.xhr = xhr;
             this.options = options;
             this.name = options.name;
