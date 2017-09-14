@@ -125,6 +125,7 @@ define([
             }
         },
         send : function(options, data){
+            data = data || {};
             var method = options.method || "get";
             var url    = this.getURL(options.url, data.vars);
 
