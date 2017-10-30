@@ -103,16 +103,21 @@ define([
             return tpl;
         },
         _onresponse : function(xhr, options, data, error, response){
+            var response = new this.Response(error, response || null, xhr, options, data);
             if (this.onResponse){
-                this.onResponse(new this.Response(error, response || null, xhr, options, data));
+                this.onResponse(response);
             }
 
             if (this.onError && error){
-                this.onError(new this.Response(error, response || null, xhr, options, data));
+                this.onError(response);
             }
 
             if (options.callback){
-                options.callback(new this.Response(error, response || null, xhr, options, data));
+                options.callback(response);
+            }
+
+            if (data.callback){
+                data.callback(response);
             }
 
         },
