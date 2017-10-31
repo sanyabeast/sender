@@ -1,7 +1,16 @@
-"use strict";
-define([
-        "superagent"
-    ], function(superagent){
+(function (root, factory) {
+    if (typeof define === "function" && define.amd) {
+        define(["superagent"], factory);
+    } else if (typeof module === "object" && module.exports) {
+        module.exports = factory(true);
+    } else {
+        var Clavis = factory();
+        var clavis = new Clavis();
+        window.clavis = clavis;
+    }
+}(this, function(superagent){
+
+    superagent = superagent || window.superagent;
 
     /*template*/
     var Template = function(tplString){
@@ -64,7 +73,6 @@ define([
             return sender;
         }
 
-        this._superagent = superagent;
         this._presets = {};
         this._vars = {};
 
@@ -73,6 +81,13 @@ define([
     };
 
     Sender.prototype = {
+        _superagent : superagent,
+        get superagent(){
+            return Sender.superagent || this._superagent;
+        },
+        set superagent(superagent){
+            Sender.superagent = superagent;
+        },
         onResponse : null,
         onError : null,
         set : function(type, name, value){
@@ -138,7 +153,7 @@ define([
             var mime   = options.mime || "form";
             var action = method == "get" ? "send" : "query";
 
-            var xhr = superagent[method](url);
+            var xhr = this.superagent[method](url);
 
             xhr.type(mime);
             xhr.send(data ? data.body : undefined);
@@ -168,5 +183,5 @@ define([
     };
 
     return Sender;
-
-});
+    
+}));
