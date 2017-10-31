@@ -4,9 +4,8 @@
     } else if (typeof module === "object" && module.exports) {
         module.exports = factory(true);
     } else {
-        var Clavis = factory();
-        var clavis = new Clavis();
-        window.clavis = clavis;
+        window.Sender = factory();
+        window.sender = new window.Sender;
     }
 }(this, function(superagent){
 
