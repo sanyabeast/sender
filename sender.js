@@ -136,7 +136,6 @@
 
         },
         request : function(options, data){
-            console.log(options, this);
             if (typeof options == "string"){
                 var name = options;
                 return this.request(this._presets[name], data);
