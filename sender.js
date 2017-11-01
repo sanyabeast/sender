@@ -136,6 +136,7 @@
 
         },
         request : function(options, data){
+            console.log(options, this);
             if (typeof options == "string"){
                 var name = options;
                 return this.request(this._presets[name], data);
@@ -174,6 +175,7 @@
             this.error = error;
             this.response = response;
             this.body = response ? response.body : null;
+            this.content = this.body;
             this.xhr = xhr;
             this.options = options;
             this.name = options.name;
