@@ -122,6 +122,7 @@
                 this.onResponse(response);
             }
 
+
             if (this.onError && error){
                 this.onError(response);
             }
@@ -179,6 +180,10 @@
             this.options = options;
             this.name = options.name;
             this.request = data;
+            this.status = {
+                isOK : response ? response.ok : false,
+                code : response ? response.statusCode : null
+            }
         }
     };
 
