@@ -146,6 +146,12 @@
         },
         send : function(options, data){
             data = data || {};
+
+            if (!options){
+                console.warn("cannot send", options, data);
+                return;
+            }
+
             var method = options.method || "get";
             var url    = this.getURL(options.url, data.vars);
 
