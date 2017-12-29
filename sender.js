@@ -144,8 +144,6 @@
 
             tpl = this.addGetParams(tpl, this._commons.getParams);
 
-            console.log(tpl);
-
             return tpl;
         },
         _onresponse : function(xhr, options, data, error, response){
