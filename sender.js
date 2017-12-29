@@ -74,12 +74,29 @@
 
         this._presets = {};
         this._vars = {};
+        this._commons = {
+            getParams : {},
+        };
 
         sender = this;
 
     };
 
     Sender.prototype = {
+        addGetParams : function(url, params){
+            var isFirst = false;
+            if (url.indexOf("?") < 0){
+                url = url + "?";
+                isFirst = true;
+            }
+
+            for (var k in params){
+                url = url + (isFirst ? "" : "&") + k + "=" + params[k];
+                isFirst = false;
+            }
+
+            return url;
+        },
         _superagent : superagent,
         get superagent(){
             return Sender.superagent || this._superagent;
@@ -92,6 +109,16 @@
         set : function(type, name, value){
             if (type = "var"){
                 this._vars[name] = value;
+            }
+        },
+        get commons(){
+            return this._commons;
+        },
+        set commons(data){
+            if (data.getParams){
+                for (var k in data.getParams){
+                    this._commons.getParams[k] = data.getParams[k];
+                }
             }
         },
         get vars(){
@@ -114,6 +141,11 @@
         getURL : function(tpl, settings){
             tpl = Template.fast(tpl, this.vars);
             if (settings) tpl = Template.fast(tpl, settings);
+
+            tpl = this.addGetParams(tpl, this._commons.getParams);
+
+            console.log(tpl);
+
             return tpl;
         },
         _onresponse : function(xhr, options, data, error, response){
