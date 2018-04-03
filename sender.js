@@ -1,6 +1,6 @@
 (function (root, factory) {
     if (typeof define === "function" && define.amd) {
-        define(["superagent"], factory);
+        define(["superagent/superagent"], factory);
     } else if (typeof module === "object" && module.exports) {
         module.exports = factory(true);
     } else {
